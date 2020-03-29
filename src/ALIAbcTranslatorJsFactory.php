@@ -8,11 +8,11 @@ use ALI\Translation\Buffer\KeyGenerators\StaticKeyGenerator;
 /**
  * Class
  */
-class ALIAbsTranslatorJsFactory
+class ALIAbcTranslatorJsFactory
 {
     /**
      * @param ALIAbc $aliAbc
-     * @return ALIAbsTranslatorJs
+     * @return ALIAbcTranslatorJs
      * @throws \ALI\Translation\Exceptions\TranslateNotDefinedException
      */
     public function createALIAbsTranslatorJs(ALIAbc $aliAbc, $templateVariableStart = null, $templateVariableEnd = null)
@@ -38,6 +38,6 @@ class ALIAbsTranslatorJsFactory
         $currentLanguageAlias = $aliAbc->getCurrentLanguageAlias();
         $translatorJs = new TranslatorJs($originalLanguageAlias, $currentLanguageAlias, $templateVariableStart, $templateVariableEnd);
 
-        return new ALIAbsTranslatorJs($aliAbc->getTranslator(), $translatorJs);
+        return new ALIAbcTranslatorJs($aliAbc->getTranslator(), $translatorJs);
     }
 }

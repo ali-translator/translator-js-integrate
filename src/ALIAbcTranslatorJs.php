@@ -8,7 +8,7 @@ use ALI\Translation\Translate\Translators\TranslatorInterface;
 /**
  * SliTranslatorJs
  */
-class ALIAbsTranslatorJs
+class ALIAbcTranslatorJs
 {
     /**
      * @var OriginalPhrasePacket

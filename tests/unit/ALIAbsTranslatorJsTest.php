@@ -4,8 +4,8 @@ namespace ALI\TranslationJsIntegrate\Tests\unit;
 
 use ALI\Translation\Helpers\QuickStart\ALIAbFactory;
 use ALI\Translation\Translate\Sources\Exceptions\SourceException;
-use ALI\TranslationJsIntegrate\ALIAbsTranslatorJs;
-use ALI\TranslationJsIntegrate\ALIAbsTranslatorJsFactory;
+use ALI\TranslationJsIntegrate\ALIAbcTranslatorJs;
+use ALI\TranslationJsIntegrate\ALIAbcTranslatorJsFactory;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -21,17 +21,17 @@ class ALIAbsTranslatorJsTest extends TestCase
     public function test()
     {
         $aliAbc = (new ALIAbFactory())->createALIByCsvSource(SOURCE_CSV_PATH, 'en', 'ua');
-        $aLIAbsTranslatorJs = (new ALIAbsTranslatorJsFactory())->createALIAbsTranslatorJs($aliAbc);
+        $aLIAbsTranslatorJs = (new ALIAbcTranslatorJsFactory())->createALIAbsTranslatorJs($aliAbc);
         $this->checkEmptyTranslate($aLIAbsTranslatorJs);
 
         $this->checkWithExistTranslate($aLIAbsTranslatorJs);
     }
 
     /**
-     * @param ALIAbsTranslatorJs $aLIAbsTranslatorJs
+     * @param ALIAbcTranslatorJs $aLIAbsTranslatorJs
      * @return string
      */
-    private function checkEmptyTranslate(ALIAbsTranslatorJs $aLIAbsTranslatorJs)
+    private function checkEmptyTranslate(ALIAbcTranslatorJs $aLIAbsTranslatorJs)
     {
         $aLIAbsTranslatorJs->addOriginalText('Hello');
 
@@ -49,10 +49,10 @@ class ALIAbsTranslatorJsTest extends TestCase
     }
 
     /**
-     * @param ALIAbsTranslatorJs $aLIAbsTranslatorJs
+     * @param ALIAbcTranslatorJs $aLIAbsTranslatorJs
      * @throws SourceException
      */
-    private function checkWithExistTranslate(ALIAbsTranslatorJs $aLIAbsTranslatorJs)
+    private function checkWithExistTranslate(ALIAbcTranslatorJs $aLIAbsTranslatorJs)
     {
         $aLIAbsTranslatorJs->getTranslator()->saveTranslate('Hello', 'Привіт');
         $startupJs = $aLIAbsTranslatorJs->generateStartupJs();

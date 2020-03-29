@@ -15,19 +15,19 @@ $ composer require ali-translator/translation-js-integrate
 For work, you must include `src/assets/js/ali-translation.js` script in your html code.<br>
 After that, create instance of `ALIAbsTranslatorJs`:
 ```php
-use ALI\TranslationJsIntegrate\ALIAbsTranslatorJsFactory;
+use ALI\TranslationJsIntegrate\ALIAbcTranslatorJsFactory;
 use ALI\Translation\Helpers\QuickStart\ALIAbFactory;
 
 $aliAbc = (new ALIAbFactory())->createALIByCsvSource(SOURCE_CSV_PATH, 'en', 'ua');
-$aLIAbsTranslatorJs = (new ALIAbsTranslatorJsFactory())->createALIAbsTranslatorJs($aliAbc);
+$aLIAbsTranslatorJs = (new ALIAbcTranslatorJsFactory())->createALIAbsTranslatorJs($aliAbc);
 ```   
 
 ## Basic Usage
 php:
 ```php
-use \ALI\TranslationJsIntegrate\ALIAbsTranslatorJs;
+use \ALI\TranslationJsIntegrate\ALIAbcTranslatorJs;
 
-/** @var ALIAbsTranslatorJs $aLIAbsTranslatorJs */
+/** @var ALIAbcTranslatorJs $aLIAbsTranslatorJs */
 
 // $aliAbc->saveTranslate('Hello {object}!', 'Привіт {object}!');
 
