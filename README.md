@@ -19,7 +19,7 @@ use ALI\TranslationJsIntegrate\ALIAbcTranslatorJsFactory;
 use ALI\Translation\Helpers\QuickStart\ALIAbFactory;
 
 $aliAbc = (new ALIAbFactory())->createALIByCsvSource(SOURCE_CSV_PATH, 'en', 'ua');
-$aLIAbsTranslatorJs = (new ALIAbcTranslatorJsFactory())->createALIAbsTranslatorJs($aliAbc);
+$aLIAbsTranslatorJs = (new ALIAbcTranslatorJsFactory())->createALIAbcTranslatorJs($aliAbc);
 ```   
 
 ## Basic Usage

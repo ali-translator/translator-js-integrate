@@ -77,12 +77,11 @@ class TranslatorJs
         $templateVariableEnd = $this->templateVariableEnd;
 
         $js = <<<JS
-(function() {
-  var translatorModules = window.modules.translator,
-      textTemplateDecoder = new translatorModules.TextTemplateDecoder('$templateVariableStart','$templateVariableEnd'),
-      translator = new translatorModules.Translator("$defaultLanguage", "$currentLanguage", textTemplateDecoder, $translations);
+(function(t) {
+  var textTemplateDecoder = new t.TextTemplateDecoder('$templateVariableStart','$templateVariableEnd'),
+      translator = new t.Translator("$defaultLanguage", "$currentLanguage", textTemplateDecoder, $translations);
       $translateAliasJsVariableName = translator.translate.bind(translator);
-})();
+})(window.modules.translator);
 JS;
         return $js;
     }

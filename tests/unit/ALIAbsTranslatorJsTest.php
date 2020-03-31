@@ -2,7 +2,7 @@
 
 namespace ALI\TranslationJsIntegrate\Tests\unit;
 
-use ALI\Translation\Helpers\QuickStart\ALIAbFactory;
+use ALI\Translation\Helpers\QuickStart\ALIAbcFactory;
 use ALI\Translation\Translate\Sources\Exceptions\SourceException;
 use ALI\TranslationJsIntegrate\ALIAbcTranslatorJs;
 use ALI\TranslationJsIntegrate\ALIAbcTranslatorJsFactory;
@@ -20,8 +20,8 @@ class ALIAbsTranslatorJsTest extends TestCase
      */
     public function test()
     {
-        $aliAbc = (new ALIAbFactory())->createALIByCsvSource(SOURCE_CSV_PATH, 'en', 'ua');
-        $aLIAbsTranslatorJs = (new ALIAbcTranslatorJsFactory())->createALIAbsTranslatorJs($aliAbc);
+        $aliAbc = (new ALIAbcFactory())->createALIByCsvSource(SOURCE_CSV_PATH, 'en', 'ua');
+        $aLIAbsTranslatorJs = (new ALIAbcTranslatorJsFactory())->createALIAbcTranslatorJs($aliAbc);
         $this->checkEmptyTranslate($aLIAbsTranslatorJs);
 
         $this->checkWithExistTranslate($aLIAbsTranslatorJs);
@@ -29,7 +29,6 @@ class ALIAbsTranslatorJsTest extends TestCase
 
     /**
      * @param ALIAbcTranslatorJs $aLIAbsTranslatorJs
-     * @return string
      */
     private function checkEmptyTranslate(ALIAbcTranslatorJs $aLIAbsTranslatorJs)
     {
@@ -37,12 +36,11 @@ class ALIAbsTranslatorJsTest extends TestCase
 
         $startupJs = $aLIAbsTranslatorJs->generateStartupJs();
 
-        $expectCode = '(function() {
-  var translatorModules = window.modules.translator,
-      textTemplateDecoder = new translatorModules.TextTemplateDecoder(\'{\',\'}\'),
-      translator = new translatorModules.Translator("en", "ua", textTemplateDecoder, {"ua":{"Hello":""}});
+        $expectCode = '(function(t) {
+  var textTemplateDecoder = new t.TextTemplateDecoder(\'{\',\'}\'),
+      translator = new t.Translator("en", "ua", textTemplateDecoder, {"ua":{"Hello":""}});
       __t = translator.translate.bind(translator);
-})();';
+})(window.modules.translator);';
         $this->assertEquals($expectCode, $startupJs);
 
         $aLIAbsTranslatorJs->getTranslator()->getSource()->delete('Hello');
@@ -59,12 +57,12 @@ class ALIAbsTranslatorJsTest extends TestCase
 
         $aLIAbsTranslatorJs->getTranslator()->getSource()->delete('Hello');
 
-        $expectCode = '(function() {
-  var translatorModules = window.modules.translator,
-      textTemplateDecoder = new translatorModules.TextTemplateDecoder(\'{\',\'}\'),
-      translator = new translatorModules.Translator("en", "ua", textTemplateDecoder, {"ua":{"Hello":"Привіт"}});
+        $expectCode = '(function(t) {
+  var textTemplateDecoder = new t.TextTemplateDecoder(\'{\',\'}\'),
+      translator = new t.Translator("en", "ua", textTemplateDecoder, {"ua":{"Hello":"Привіт"}});
       __t = translator.translate.bind(translator);
-})();';
+})(window.modules.translator);';
+
         $this->assertEquals($expectCode, $startupJs);
     }
 }

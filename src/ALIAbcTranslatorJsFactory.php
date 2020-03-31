@@ -15,7 +15,7 @@ class ALIAbcTranslatorJsFactory
      * @return ALIAbcTranslatorJs
      * @throws \ALI\Translation\Exceptions\TranslateNotDefinedException
      */
-    public function createALIAbsTranslatorJs(ALIAbc $aliAbc, $templateVariableStart = null, $templateVariableEnd = null)
+    public function createALIAbcTranslatorJs(ALIAbc $aliAbc, $templateVariableStart = null, $templateVariableEnd = null)
     {
         $templatesKeyGenerator = $aliAbc->getTemplatesKeyGenerator();
 
