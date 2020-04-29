@@ -2,7 +2,7 @@
 
 namespace ALI\TranslationJsIntegrate;
 
-use ALI\Translation\Translate\PhrasePackets\OriginalPhrasePacket;
+use ALI\Translation\Translate\PhrasePackets\OriginalPhraseCollection;
 use ALI\Translation\Translate\Translators\TranslatorInterface;
 
 /**
@@ -11,9 +11,9 @@ use ALI\Translation\Translate\Translators\TranslatorInterface;
 class ALIAbcTranslatorJs
 {
     /**
-     * @var OriginalPhrasePacket
+     * @var OriginalPhraseCollection
      */
-    protected $originalPhrasePacket;
+    protected $originalPhraseCollection;
 
     /**
      * @var TranslatorInterface
@@ -32,7 +32,7 @@ class ALIAbcTranslatorJs
     {
         $this->translator = $translator;
         $this->translatorJs = $translatorJs;
-        $this->originalPhrasePacket = new OriginalPhrasePacket();
+        $this->originalPhraseCollection = new OriginalPhraseCollection();
     }
 
     /**
@@ -41,7 +41,7 @@ class ALIAbcTranslatorJs
     public function addOriginals(array $texts)
     {
         foreach ($texts as $text) {
-            $this->originalPhrasePacket->add($text);
+            $this->originalPhraseCollection->add($text);
         }
     }
 
@@ -50,7 +50,7 @@ class ALIAbcTranslatorJs
      */
     public function addOriginalText($text)
     {
-        $this->originalPhrasePacket->add($text);
+        $this->originalPhraseCollection->add($text);
     }
 
     /**
@@ -59,7 +59,7 @@ class ALIAbcTranslatorJs
      */
     public function generateStartupJs($translateAliasJsVariableName = '__t')
     {
-        $translationsPacket = $this->translator->translateAll($this->originalPhrasePacket->getAll());
+        $translationsPacket = $this->translator->translateAll($this->originalPhraseCollection->getAll());
 
         $this->translatorJs->setTranslationsByLanguages([
             $this->translator->getLanguageAlias() => $translationsPacket->getAll()
