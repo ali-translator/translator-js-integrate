@@ -50,3 +50,9 @@ alert(__t('Hello {object}!',{
     'object' : 'sun'
 }))
 ```
+### Tests
+In packet exist docker-compose file, with environment for testing.
+```bash
+docker-compose run php composer install
+docker-compose run php vendor/bin/phpunit
+```

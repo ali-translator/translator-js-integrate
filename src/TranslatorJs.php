@@ -76,13 +76,15 @@ class TranslatorJs
         $templateVariableStart = $this->templateVariableStart;
         $templateVariableEnd = $this->templateVariableEnd;
 
-        $js = <<<JS
-(function(t) {
-  var textTemplateDecoder = new t.TextTemplateDecoder('$templateVariableStart','$templateVariableEnd'),
-      translator = new t.Translator("$defaultLanguage", "$currentLanguage", textTemplateDecoder, $translations);
-      $translateAliasJsVariableName = translator.translate.bind(translator);
-})(window.modules.translator);
-JS;
+        $js = '(function(t,w) {
+    if (typeof w.ALIABCTranslator_' . $translateAliasJsVariableName . ' === \'undefined\') {
+        var textTemplateDecoder = new t.TextTemplateDecoder(\'' . $templateVariableStart . '\',\'' . $templateVariableEnd . '\');
+        w.ALIABCTranslator_' . $translateAliasJsVariableName . ' = new t.Translator(\'' . $defaultLanguage . '\', \'' . $currentLanguage . '\', textTemplateDecoder, ' . $translations . ');
+        w.' . $translateAliasJsVariableName . ' = w.ALIABCTranslator_' . $translateAliasJsVariableName . '.translate.bind(w.ALIABCTranslator_' . $translateAliasJsVariableName . ');
+    } else {
+        w.ALIABCTranslator_' . $translateAliasJsVariableName . '.addTranslations(' . $translations . ');
+    }
+})(window.modules.translator,window);';
         return $js;
     }
 

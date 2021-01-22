@@ -52,6 +52,28 @@ window.modules.translator = window.modules.translator || {};
     };
 
     /**
+     * @param translations
+     */
+    Translator.prototype.addTranslations = function (translations) {
+        var languageTranslations, phraseTranslate;
+
+        for (var language in translations) {
+            if (translations.hasOwnProperty(language)) {
+                languageTranslations = translations[language];
+                this.translations.language = this.translations.language || {};
+
+                for (var original in languageTranslations) {
+                    if (languageTranslations.hasOwnProperty(original)) {
+                        phraseTranslate = languageTranslations[original];
+
+                        this.translations[language][original] = phraseTranslate;
+                    }
+                }
+            }
+        }
+    };
+
+    /**
      * @param {string} text
      * @param {string} language
      * @return {*}

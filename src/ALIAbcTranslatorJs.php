@@ -61,8 +61,15 @@ class ALIAbcTranslatorJs
     {
         $translationsPacket = $this->translator->translateAll($this->originalPhraseCollection->getAll());
 
+        $translations = [];
+        foreach ($translationsPacket->getAll() as $original => $translate) {
+            if ($translate) {
+                $translations[$original] = $translate;
+            }
+        }
+
         $this->translatorJs->setTranslationsByLanguages([
-            $this->translator->getLanguageAlias() => $translationsPacket->getAll()
+            $this->translator->getLanguageAlias() => $translations
         ]);
 
         return $this->translatorJs->generateRegisterJs($translateAliasJsVariableName);

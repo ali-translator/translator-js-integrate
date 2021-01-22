@@ -36,11 +36,15 @@ class ALIAbsTranslatorJsTest extends TestCase
 
         $startupJs = $aLIAbsTranslatorJs->generateStartupJs();
 
-        $expectCode = '(function(t) {
-  var textTemplateDecoder = new t.TextTemplateDecoder(\'{\',\'}\'),
-      translator = new t.Translator("en", "ua", textTemplateDecoder, {"ua":{"Hello":""}});
-      __t = translator.translate.bind(translator);
-})(window.modules.translator);';
+        $expectCode = '(function(t,w) {
+    if (typeof w.ALIABCTranslator___t === \'undefined\') {
+        var textTemplateDecoder = new t.TextTemplateDecoder(\'{\',\'}\');
+        w.ALIABCTranslator___t = new t.Translator(\'en\', \'ua\', textTemplateDecoder, {"ua":[]});
+        w.__t = w.ALIABCTranslator___t.translate.bind(w.ALIABCTranslator___t);
+    } else {
+        w.ALIABCTranslator___t.addTranslations({"ua":[]});
+    }
+})(window.modules.translator,window);';
         $this->assertEquals($expectCode, $startupJs);
 
         $aLIAbsTranslatorJs->getTranslator()->getSource()->delete('Hello');
@@ -57,11 +61,15 @@ class ALIAbsTranslatorJsTest extends TestCase
 
         $aLIAbsTranslatorJs->getTranslator()->getSource()->delete('Hello');
 
-        $expectCode = '(function(t) {
-  var textTemplateDecoder = new t.TextTemplateDecoder(\'{\',\'}\'),
-      translator = new t.Translator("en", "ua", textTemplateDecoder, {"ua":{"Hello":"Привіт"}});
-      __t = translator.translate.bind(translator);
-})(window.modules.translator);';
+        $expectCode = '(function(t,w) {
+    if (typeof w.ALIABCTranslator___t === \'undefined\') {
+        var textTemplateDecoder = new t.TextTemplateDecoder(\'{\',\'}\');
+        w.ALIABCTranslator___t = new t.Translator(\'en\', \'ua\', textTemplateDecoder, {"ua":{"Hello":"Привіт"}});
+        w.__t = w.ALIABCTranslator___t.translate.bind(w.ALIABCTranslator___t);
+    } else {
+        w.ALIABCTranslator___t.addTranslations({"ua":{"Hello":"Привіт"}});
+    }
+})(window.modules.translator,window);';
 
         $this->assertEquals($expectCode, $startupJs);
     }
