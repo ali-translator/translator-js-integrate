@@ -1,11 +1,11 @@
 <?php
 
-namespace ALI\TranslationJsIntegrate\Tests\unit;
+namespace ALI\TranslatorJsIntegrate\Tests\unit;
 
-use ALI\Translation\Helpers\QuickStart\ALIAbcFactory;
-use ALI\Translation\Translate\Sources\Exceptions\SourceException;
-use ALI\TranslationJsIntegrate\ALIAbcTranslatorJs;
-use ALI\TranslationJsIntegrate\ALIAbcTranslatorJsFactory;
+use ALI\Translator\PlainTranslator\PlainTranslatorFactory;
+use ALI\TranslatorJsIntegrate\ALIAbcTranslatorJs;
+use ALI\TranslatorJsIntegrate\Tests\components\Factories\SourceFactory;
+use ALI\TranslatorJsIntegrate\TranslatorJs;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -13,18 +13,18 @@ use PHPUnit\Framework\TestCase;
  */
 class ALIAbsTranslatorJsTest extends TestCase
 {
-    /**
-     * @throws SourceException
-     * @throws \ALI\Translation\Exceptions\TranslateNotDefinedException
-     * @throws \ALI\Translation\Translate\Sources\Exceptions\CsvFileSource\UnsupportedLanguageAliasException
-     */
     public function test()
     {
-        $aliAbc = (new ALIAbcFactory())->createALIByCsvSource(SOURCE_CSV_PATH, 'en', 'ua');
-        $aLIAbsTranslatorJs = (new ALIAbcTranslatorJsFactory())->createALIAbcTranslatorJs($aliAbc);
-        $this->checkEmptyTranslate($aLIAbsTranslatorJs);
+        $sourceFactory = new SourceFactory();
+        $source = $sourceFactory->generateSource($sourceFactory::ORIGINAL_LANGUAGE_ALIAS, $sourceFactory::TRANSLATION_LANGUAGE_ALIAS);
+        $plainTranslator = (new PlainTranslatorFactory())->createPlainTranslator($source, $sourceFactory::TRANSLATION_LANGUAGE_ALIAS);
 
-        $this->checkWithExistTranslate($aLIAbsTranslatorJs);
+        $translatorJs = new TranslatorJs($sourceFactory::ORIGINAL_LANGUAGE_ALIAS, $sourceFactory::TRANSLATION_LANGUAGE_ALIAS);
+        $ALIAbcTranslatorJs = new ALIAbcTranslatorJs($plainTranslator, $translatorJs);
+
+        $this->checkEmptyTranslate($ALIAbcTranslatorJs);
+
+        $this->checkWithExistTranslate($ALIAbcTranslatorJs);
     }
 
     /**
@@ -47,19 +47,18 @@ class ALIAbsTranslatorJsTest extends TestCase
 })(window.modules.translator,window);';
         $this->assertEquals($expectCode, $startupJs);
 
-        $aLIAbsTranslatorJs->getTranslator()->getSource()->delete('Hello');
+        $aLIAbsTranslatorJs->getPlainTranslator()->getSource()->delete('Hello');
     }
 
     /**
      * @param ALIAbcTranslatorJs $aLIAbsTranslatorJs
-     * @throws SourceException
      */
     private function checkWithExistTranslate(ALIAbcTranslatorJs $aLIAbsTranslatorJs)
     {
-        $aLIAbsTranslatorJs->getTranslator()->saveTranslate('Hello', 'Привіт');
+        $aLIAbsTranslatorJs->getPlainTranslator()->saveTranslate('Hello', 'Привіт');
         $startupJs = $aLIAbsTranslatorJs->generateStartupJs();
 
-        $aLIAbsTranslatorJs->getTranslator()->getSource()->delete('Hello');
+        $aLIAbsTranslatorJs->getPlainTranslator()->getSource()->delete('Hello');
 
         $expectCode = '(function(t,w) {
     if (typeof w.ALIABCTranslator___t === \'undefined\') {

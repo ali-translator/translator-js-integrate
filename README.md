@@ -1,31 +1,37 @@
-# ALIAbc js integrate
+# Js integration of `php AliAbc Translator` to frontend 
 
 
-Additional packet for [ali-translator/translation](https://github.com/ali-translator/translation) which help integrate tanslator to frontend js.
+Additional packet for [ali-translator/translator](https://github.com/ali-translator/translator) which help integrate this tanslator to frontend js.
 
 
 ## Installation
 
 ```bash
-$ composer require ali-translator/translation-js-integrate
+$ composer require ali-translator/translator-js-integrate
 ```
 
 ## Init
 
-For work, you must include `src/assets/js/ali-translation.js` script in your html code.<br>
+Since this package extended from <b>[ali-translator/translator](https://github.com/ali-translator/translator)</b>,
+at first you need create `$translator` and wrapper, with vector of his translation - `$plaiTranslator`
+
+Than include `src/assets/js/ali-translator.js` script in your html code.<br>
 After that, create instance of `ALIAbsTranslatorJs`:
 ```php
-use ALI\TranslationJsIntegrate\ALIAbcTranslatorJsFactory;
-use ALI\Translation\Helpers\QuickStart\ALIAbFactory;
+use ALI\TranslatorJsIntegrate\ALIAbcTranslatorJs;
+use ALI\TranslatorJsIntegrate\TranslatorJs;
+use ALI\Translator\PlainTranslator\PlainTranslator;
 
-$aliAbc = (new ALIAbFactory())->createALIByCsvSource(SOURCE_CSV_PATH, 'en', 'ua');
-$aLIAbsTranslatorJs = (new ALIAbcTranslatorJsFactory())->createALIAbcTranslatorJs($aliAbc);
+/** @var PlainTranslator $plainTranslator */
+
+$translatorJs = new TranslatorJs('en', 'ua');
+$ALIAbcTranslatorJs = new ALIAbcTranslatorJs($plainTranslator, $translatorJs);
 ```   
 
 ## Basic Usage
 php:
 ```php
-use \ALI\TranslationJsIntegrate\ALIAbcTranslatorJs;
+use \ALI\TranslatorJsIntegrate\ALIAbcTranslatorJs;
 
 /** @var ALIAbcTranslatorJs $aLIAbsTranslatorJs */
 
@@ -38,7 +44,7 @@ html:
 ```html
 <html>
 <head>
-<script src="/js/ali-translation.js"></script>
+<script src="/js/ali-translator.js"></script>
 <script><?= $startUpJsCode ?></script>
 </head>
 <body>...</body>

@@ -1,5 +1,7 @@
 # phpstorm project files
 .idea
+.phpunit.result.cache
 
 composer.lock
 /vendor/
+/tests/_data/source/

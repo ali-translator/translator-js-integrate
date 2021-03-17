@@ -1,40 +1,39 @@
 {
-    "name": "ali-translator/translation-js-integrate",
-    "description": "Integrate ALI translation to js frontend",
+    "name": "ali-translator/translator-js-integrate",
+    "description": "Integrate ALI translator to frontend js",
     "keywords": [
-        "sli"
+        "sli", "translator", "js translator"
     ],
     "homepage": "https://sli.su/",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "Bohdan Rykhal",
-            "email": "sli@sli.su",
-            "homepage": "https://sli.su/"
-        },
-        {
             "name": "Slayer911",
             "email": "garolds911@gmail.com"
+        },
+        {
+            "name": "Bohdan Rykhal",
+            "email": "sli@sli.su"
         }
     ],
     "support": {
-        "issues": "https://github.com/ali-translator/translation-js-integrate/issues?state=open",
-        "source": "https://github.com/ali-translator/translation-js-integrate"
+        "issues": "https://github.com/ali-translator/translator-js-integrate/issues?state=open",
+        "source": "https://github.com/ali-translator/translator-js-integrate"
     },
     "require": {
         "php": ">=5.6.0",
-        "ali-translator/translation": "dev-master",
+        "ali-translator/translator": "^0",
         "ext-json": "*"
     },
     "autoload": {
         "psr-4": {
-            "ALI\\TranslationJsIntegrate\\": "src/"
+            "ALI\\TranslatorJsIntegrate\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "ALI\\TranslationJsIntegrate\\Tests\\": "tests/"
+            "ALI\\TranslatorJsIntegrate\\Tests\\": "tests/"
         }
     },
     "require-dev": {

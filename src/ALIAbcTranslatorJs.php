@@ -1,9 +1,9 @@
 <?php
 
-namespace ALI\TranslationJsIntegrate;
+namespace ALI\TranslatorJsIntegrate;
 
-use ALI\Translation\Translate\PhrasePackets\OriginalPhraseCollection;
-use ALI\Translation\Translate\Translators\TranslatorInterface;
+use ALI\Translator\PhraseCollection\OriginalPhraseCollection;
+use ALI\Translator\PlainTranslator\PlainTranslatorInterface;
 
 /**
  * SliTranslatorJs
@@ -16,9 +16,9 @@ class ALIAbcTranslatorJs
     protected $originalPhraseCollection;
 
     /**
-     * @var TranslatorInterface
+     * @var PlainTranslatorInterface
      */
-    protected $translator;
+    protected $plainTranslator;
 
     /**
      * @var TranslatorJs
@@ -26,13 +26,14 @@ class ALIAbcTranslatorJs
     protected $translatorJs;
 
     /**
-     * @param TranslatorInterface $translator
+     * @param PlainTranslatorInterface $plainTranslator
+     * @param TranslatorJs $translatorJs
      */
-    public function __construct(TranslatorInterface $translator, TranslatorJs $translatorJs)
+    public function __construct(PlainTranslatorInterface $plainTranslator, TranslatorJs $translatorJs)
     {
-        $this->translator = $translator;
+        $this->plainTranslator = $plainTranslator;
         $this->translatorJs = $translatorJs;
-        $this->originalPhraseCollection = new OriginalPhraseCollection();
+        $this->originalPhraseCollection = new OriginalPhraseCollection($plainTranslator->getSource()->getOriginalLanguageAlias());
     }
 
     /**
@@ -59,7 +60,7 @@ class ALIAbcTranslatorJs
      */
     public function generateStartupJs($translateAliasJsVariableName = '__t')
     {
-        $translationsPacket = $this->translator->translateAll($this->originalPhraseCollection->getAll());
+        $translationsPacket = $this->plainTranslator->translateAll($this->originalPhraseCollection->getAll());
 
         $translations = [];
         foreach ($translationsPacket->getAll() as $original => $translate) {
@@ -69,17 +70,17 @@ class ALIAbcTranslatorJs
         }
 
         $this->translatorJs->setTranslationsByLanguages([
-            $this->translator->getLanguageAlias() => $translations
+            $this->plainTranslator->getTranslationLanguageAlias() => $translations,
         ]);
 
         return $this->translatorJs->generateRegisterJs($translateAliasJsVariableName);
     }
 
     /**
-     * @return TranslatorInterface
+     * @return PlainTranslatorInterface
      */
-    public function getTranslator()
+    public function getPlainTranslator()
     {
-        return $this->translator;
+        return $this->plainTranslator;
     }
 }
