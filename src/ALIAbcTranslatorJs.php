@@ -27,12 +27,12 @@ class ALIAbcTranslatorJs
 
     /**
      * @param PlainTranslatorInterface $plainTranslator
-     * @param TranslatorJs $translatorJs
+     * @param null|TranslatorJs $translatorJs
      */
-    public function __construct(PlainTranslatorInterface $plainTranslator, TranslatorJs $translatorJs)
+    public function __construct(PlainTranslatorInterface $plainTranslator, ?TranslatorJs $translatorJs = null)
     {
         $this->plainTranslator = $plainTranslator;
-        $this->translatorJs = $translatorJs;
+        $this->translatorJs = $translatorJs ?? new TranslatorJs();
         $this->originalPhraseCollection = new OriginalPhraseCollection($plainTranslator->getSource()->getOriginalLanguageAlias());
     }
 

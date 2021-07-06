@@ -19,13 +19,11 @@ Than include `src/assets/js/ali-translator.js` script in your html code.<br>
 After that, create instance of `ALIAbsTranslatorJs`:
 ```php
 use ALI\TranslatorJsIntegrate\ALIAbcTranslatorJs;
-use ALI\TranslatorJsIntegrate\TranslatorJs;
 use ALI\Translator\PlainTranslator\PlainTranslator;
 
 /** @var PlainTranslator $plainTranslator */
 
-$translatorJs = new TranslatorJs();
-$ALIAbcTranslatorJs = new ALIAbcTranslatorJs($plainTranslator, $translatorJs);
+$ALIAbcTranslatorJs = new ALIAbcTranslatorJs($plainTranslator);
 ```   
 
 ## Basic Usage

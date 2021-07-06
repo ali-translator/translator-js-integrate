@@ -11,10 +11,6 @@
         {
             "name": "Slayer911",
             "email": "garolds911@gmail.com"
-        },
-        {
-            "name": "Bohdan Rykhal",
-            "email": "sli@sli.su"
         }
     ],
     "support": {
@@ -22,7 +18,7 @@
         "source": "https://github.com/ali-translator/translator-js-integrate"
     },
     "require": {
-        "php": ">=5.6.0",
+        "php": ">=7.1",
         "ali-translator/translator": "^0",
         "ext-json": "*"
     },
