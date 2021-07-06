@@ -10,16 +10,6 @@ class TranslatorJs
     /**
      * @var string
      */
-    protected $originalLanguageAlias;
-
-    /**
-     * @var string
-     */
-    protected $translationLanguageAlias;
-
-    /**
-     * @var string
-     */
     protected $templateVariableStart = '{';
 
     /**
@@ -33,20 +23,14 @@ class TranslatorJs
     protected $translations;
 
     /**
-     * @param string $originalLanguageAlias
-     * @param string $defaultTranslationLanguageAlias
      * @param string $templateVariableStart
      * @param string $templateVariableEnd
      */
     public function __construct(
-        $originalLanguageAlias,
-        $defaultTranslationLanguageAlias,
         $templateVariableStart = '{',
         $templateVariableEnd = '}'
     )
     {
-        $this->originalLanguageAlias = $originalLanguageAlias;
-        $this->translationLanguageAlias = $defaultTranslationLanguageAlias;
         $this->templateVariableStart = $templateVariableStart;
         $this->templateVariableEnd = $templateVariableEnd;
     }
@@ -69,13 +53,16 @@ class TranslatorJs
     }
 
     /**
+     * @param string $originalLanguageAlias
+     * @param string $currentLanguage
      * @param string $translateAliasJsVariableName
      * @return string
      */
-    public function generateRegisterJs($translateAliasJsVariableName = '__t')
+    public function generateRegisterJs(
+        $originalLanguageAlias,
+        $currentLanguage,
+        $translateAliasJsVariableName = '__t')
     {
-        $originalLanguageAlias = $this->originalLanguageAlias;
-        $currentLanguage = $this->translationLanguageAlias;
         $translations = json_encode($this->translations, JSON_UNESCAPED_UNICODE);
 
         $templateVariableStart = $this->templateVariableStart;

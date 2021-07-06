@@ -19,7 +19,7 @@ class ALIAbsTranslatorJsTest extends TestCase
         $source = $sourceFactory->generateSource($sourceFactory::ORIGINAL_LANGUAGE_ALIAS, $sourceFactory::TRANSLATION_LANGUAGE_ALIAS);
         $plainTranslator = (new PlainTranslatorFactory())->createPlainTranslator($source, $sourceFactory::TRANSLATION_LANGUAGE_ALIAS);
 
-        $translatorJs = new TranslatorJs($sourceFactory::ORIGINAL_LANGUAGE_ALIAS, $sourceFactory::TRANSLATION_LANGUAGE_ALIAS);
+        $translatorJs = new TranslatorJs();
         $ALIAbcTranslatorJs = new ALIAbcTranslatorJs($plainTranslator, $translatorJs);
 
         $this->checkEmptyTranslate($ALIAbcTranslatorJs);

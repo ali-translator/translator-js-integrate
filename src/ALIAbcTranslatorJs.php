@@ -73,7 +73,11 @@ class ALIAbcTranslatorJs
             $this->plainTranslator->getTranslationLanguageAlias() => $translations,
         ]);
 
-        return $this->translatorJs->generateRegisterJs($translateAliasJsVariableName);
+        return $this->translatorJs->generateRegisterJs(
+            $this->plainTranslator->getSource()->getOriginalLanguageAlias(),
+            $this->plainTranslator->getTranslationLanguageAlias(),
+            $translateAliasJsVariableName
+        );
     }
 
     /**

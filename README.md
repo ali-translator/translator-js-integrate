@@ -24,7 +24,7 @@ use ALI\Translator\PlainTranslator\PlainTranslator;
 
 /** @var PlainTranslator $plainTranslator */
 
-$translatorJs = new TranslatorJs('en', 'ua');
+$translatorJs = new TranslatorJs();
 $ALIAbcTranslatorJs = new ALIAbcTranslatorJs($plainTranslator, $translatorJs);
 ```   
 
