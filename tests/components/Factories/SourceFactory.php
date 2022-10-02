@@ -5,9 +5,6 @@ namespace ALI\TranslatorJsIntegrate\Tests\components\Factories;
 use ALI\Translator\Source\SourceInterface;
 use ALI\Translator\Source\Sources\FileSources\CsvSource\CsvFileSource;
 
-/**
- * SourceFactory
- */
 class SourceFactory
 {
     const ORIGINAL_LANGUAGE_ALIAS = 'en';

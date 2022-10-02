@@ -2,9 +2,6 @@
 
 namespace ALI\TranslatorJsIntegrate;
 
-/**
- * TranslatorJs
- */
 class TranslatorJs
 {
     /**
@@ -69,12 +66,13 @@ class TranslatorJs
         $templateVariableEnd = $this->templateVariableEnd;
 
         $js = '(function(t,w) {
+    var translationData = '.$translations.';
     if (typeof w.ALIABCTranslator_' . $translateAliasJsVariableName . ' === \'undefined\') {
         var textTemplateDecoder = new t.TextTemplateDecoder(\'' . $templateVariableStart . '\',\'' . $templateVariableEnd . '\');
-        w.ALIABCTranslator_' . $translateAliasJsVariableName . ' = new t.Translator(\'' . $originalLanguageAlias . '\', \'' . $currentLanguage . '\', textTemplateDecoder, ' . $translations . ');
+        w.ALIABCTranslator_' . $translateAliasJsVariableName . ' = new t.Translator(\'' . $originalLanguageAlias . '\', \'' . $currentLanguage . '\', textTemplateDecoder, translationData);
         w.' . $translateAliasJsVariableName . ' = w.ALIABCTranslator_' . $translateAliasJsVariableName . '.translate.bind(w.ALIABCTranslator_' . $translateAliasJsVariableName . ');
     } else {
-        w.ALIABCTranslator_' . $translateAliasJsVariableName . '.addTranslations(' . $translations . ');
+        w.ALIABCTranslator_' . $translateAliasJsVariableName . '.addTranslations(translationData);
     }
 })(window.modules.translator,window);';
 

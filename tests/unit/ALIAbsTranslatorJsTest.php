@@ -8,9 +8,6 @@ use ALI\TranslatorJsIntegrate\Tests\components\Factories\SourceFactory;
 use ALI\TranslatorJsIntegrate\TranslatorJs;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class
- */
 class ALIAbsTranslatorJsTest extends TestCase
 {
     public function test()
@@ -37,12 +34,13 @@ class ALIAbsTranslatorJsTest extends TestCase
         $startupJs = $aLIAbsTranslatorJs->generateStartupJs();
 
         $expectCode = '(function(t,w) {
+    var translationData = {"ua":[]};
     if (typeof w.ALIABCTranslator___t === \'undefined\') {
         var textTemplateDecoder = new t.TextTemplateDecoder(\'{\',\'}\');
-        w.ALIABCTranslator___t = new t.Translator(\'en\', \'ua\', textTemplateDecoder, {"ua":[]});
+        w.ALIABCTranslator___t = new t.Translator(\'en\', \'ua\', textTemplateDecoder, translationData);
         w.__t = w.ALIABCTranslator___t.translate.bind(w.ALIABCTranslator___t);
     } else {
-        w.ALIABCTranslator___t.addTranslations({"ua":[]});
+        w.ALIABCTranslator___t.addTranslations(translationData);
     }
 })(window.modules.translator,window);';
         $this->assertEquals($expectCode, $startupJs);
@@ -61,12 +59,13 @@ class ALIAbsTranslatorJsTest extends TestCase
         $aLIAbsTranslatorJs->getPlainTranslator()->getSource()->delete('Hello');
 
         $expectCode = '(function(t,w) {
+    var translationData = {"ua":{"Hello":"Привіт"}};
     if (typeof w.ALIABCTranslator___t === \'undefined\') {
         var textTemplateDecoder = new t.TextTemplateDecoder(\'{\',\'}\');
-        w.ALIABCTranslator___t = new t.Translator(\'en\', \'ua\', textTemplateDecoder, {"ua":{"Hello":"Привіт"}});
+        w.ALIABCTranslator___t = new t.Translator(\'en\', \'ua\', textTemplateDecoder, translationData);
         w.__t = w.ALIABCTranslator___t.translate.bind(w.ALIABCTranslator___t);
     } else {
-        w.ALIABCTranslator___t.addTranslations({"ua":{"Hello":"Привіт"}});
+        w.ALIABCTranslator___t.addTranslations(translationData);
     }
 })(window.modules.translator,window);';
 

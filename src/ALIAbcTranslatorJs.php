@@ -5,9 +5,6 @@ namespace ALI\TranslatorJsIntegrate;
 use ALI\Translator\PhraseCollection\OriginalPhraseCollection;
 use ALI\Translator\PlainTranslator\PlainTranslatorInterface;
 
-/**
- * SliTranslatorJs
- */
 class ALIAbcTranslatorJs
 {
     /**
